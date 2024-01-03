@@ -1,0 +1,14 @@
+"Phrases"
+{   
+    "language"  "ru"
+
+	"Prefix"
+	{
+		"ru"	"[{RED}RS{DEFAULT}]"
+	}
+
+	"Success"
+	{
+		"ru"	"Вы успешно сбросили свой счёт"
+	}
+}
