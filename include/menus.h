@@ -3,6 +3,54 @@
 #include <functional>
 #include <string>
 
+/////////////////////////////////////////////////////////////////
+///////////////////////      MYSQL     //////////////////////////
+/////////////////////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////////////////////////
+///////////////////////      UTILS     //////////////////////////
+/////////////////////////////////////////////////////////////////
+
+#define Utils_INTERFACE "IUtilsApi"
+
+typedef std::function<bool(int iSlot, const char* szContent)> CommandCallback;
+typedef std::function<bool(int iSlot, const char* szContent, bool bMute)> CommandCallbackPost;
+typedef std::function<void(const char* szName, IGameEvent* pEvent, bool bDontBroadcast)> EventCallback;
+typedef std::function<void()> StartupCallback;
+
+class IUtilsApi
+{
+public:
+    virtual void PrintToChat(int iSlot, const char* msg, ...) = 0;
+    virtual void PrintToChatAll(const char* msg, ...) = 0;
+    virtual void NextFrame(std::function<void()> fn) = 0;
+    virtual CCSGameRules* GetCCSGameRules() = 0;
+    virtual CGameEntitySystem* GetCGameEntitySystem() = 0;
+    virtual CEntitySystem* GetCEntitySystem() = 0;
+	virtual CGlobalVars* GetCGlobalVars() = 0;
+	virtual IGameEventManager2* GetGameEventManager() = 0;
+
+    virtual const char* GetLanguage() = 0;
+
+    virtual void StartupServer(SourceMM::PluginId id, StartupCallback fn) = 0;
+    virtual void OnGetGameRules(SourceMM::PluginId id, StartupCallback fn) = 0;
+
+    virtual void RegCommand(SourceMM::PluginId id, const std::vector<std::string> &console, const std::vector<std::string> &chat, const CommandCallback &callback) = 0;
+    virtual void AddChatListenerPre(SourceMM::PluginId id, CommandCallback callback) = 0;
+    virtual void AddChatListenerPost(SourceMM::PluginId id, CommandCallbackPost callback) = 0;
+    virtual void HookEvent(SourceMM::PluginId id, const char* sName, EventCallback callback) = 0;
+
+    virtual void SetStateChanged(CBaseEntity* entity, const char* sClassName, const char* sFieldName, int extraOffset = 0) = 0;
+
+    virtual void ClearAllHooks(SourceMM::PluginId id) = 0;
+};
+
+/////////////////////////////////////////////////////////////////
+///////////////////////      MENUS     //////////////////////////
+/////////////////////////////////////////////////////////////////
+
 #define Menus_INTERFACE "IMenusApi"
 
 #define ITEM_HIDE 0
@@ -45,3 +93,7 @@ public:
 	virtual void SetCallback(Menu& hMenu, MenuCallbackFunc func) = 0;
     virtual void ClosePlayerMenu(int iSlot) = 0;
 };
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
