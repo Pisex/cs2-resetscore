@@ -5,10 +5,12 @@
 	"Prefix"
 	{
 		"ru"	"[{RED}RS{DEFAULT}]"
+		"ua"	"[{RED}RS{DEFAULT}]"
 	}
 
 	"Success"
 	{
 		"ru"	"Вы успешно сбросили свой счёт"
+		"ua"	"{PURPLE}Ви обнулили свій рахунок!"
 	}
 }
