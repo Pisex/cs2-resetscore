@@ -18,12 +18,10 @@ std::map<std::string, std::string> g_vecPhrases;
 
 IUtilsApi* g_pUtils;
 
-class GameSessionConfiguration_t { };
-SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
-SH_DECL_HOOK4_void(IServerGameClients, ClientPutInServer, SH_NOATTRIB, 0, CPlayerSlot, char const *, int, uint64);
-SH_DECL_HOOK3_void(ICvar, DispatchConCommand, SH_NOATTRIB, 0, ConCommandHandle, const CCommandContext&, const CCommand&);
-SH_DECL_HOOK5_void(IServerGameClients, ClientDisconnect, SH_NOATTRIB, 0, CPlayerSlot, int, const char *, uint64, const char *);
-SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
+CGameEntitySystem* GameEntitySystem()
+{
+	return g_pUtils->GetCGameEntitySystem();
+}
 
 void ClientPrint(int iSlot, const char *msg, ...)
 {
@@ -64,7 +62,7 @@ bool OnRsCommand(int iSlot, const char* szContent)
 
 void StartupServer()
 {
-	g_pGameEntitySystem = g_pUtils->GetCGameEntitySystem();
+	g_pGameEntitySystem = GameEntitySystem();
 	g_pEntitySystem = g_pUtils->GetCEntitySystem();
 	gpGlobals = g_pUtils->GetCGlobalVars();
 }
